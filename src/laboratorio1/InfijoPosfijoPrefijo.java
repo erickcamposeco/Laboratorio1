@@ -61,6 +61,36 @@ public class InfijoPosfijoPrefijo {
         return postfijo.toString();
     }
     
-    
+    public static String convertToPrefix(String infijo) {
+        String reversedInfijo = reverseString(infijo);
+        StringBuilder prefijo = new StringBuilder();
+        Pila pila = new Pila(reversedInfijo.length());
+
+        for (int i = 0; i < reversedInfijo.length(); i++) {
+            char ch = reversedInfijo.charAt(i);
+
+            if (Character.isLetterOrDigit(ch)) {
+                prefijo.append(ch);
+            } else if (ch == ')') {
+                pila.push(ch);
+            } else if (ch == '(') {
+                while (!pila.isEmpty() && pila.peek() != ')') {
+                    prefijo.append(pila.pop());
+                }
+                pila.pop(); // Sacar ')' de la pila
+            } else if (isOperador(ch)) {
+                while (!pila.isEmpty() && validateHierarchy(ch) < validateHierarchy(pila.peek())) {
+                    prefijo.append(pila.pop());
+                }
+                pila.push(ch);
+            }
+        }
+
+        while (!pila.isEmpty()) {
+            prefijo.append(pila.pop());
+        }
+
+        return reverseString(prefijo.toString());
+    }
 }
 
