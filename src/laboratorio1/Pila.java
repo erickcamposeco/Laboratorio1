@@ -11,4 +11,35 @@ public class Pila {
         this.top = -1;
     }
     
+    public void push(char j){
+        if(isFull()) {
+            System.out.println("La pila está llena, no se puede agregar más elementos.");
+            return;
+        }
+        stackArray[++top] = j;
+    }
+    
+    public char pop() {
+        if (isEmpty()) {
+            System.out.println("La pila está vacía, no se puede sacar ningún elemento.");
+            return '\0';
+        }
+        return stackArray[top--];
+    }
+    
+    public char peek() {
+        if (isEmpty()) {
+            return '\0';
+        }
+        return stackArray[top];
+    }
+    
+    public boolean isEmpty() {
+        return (top == -1);
+    }
+    
+   
+    public boolean isFull() {
+        return (top == maxSize - 1);
+    }
 }
