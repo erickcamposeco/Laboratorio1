@@ -9,6 +9,43 @@ public class InfijoPosfijoPrefijo {
         return expresion.replaceAll("\\s+", "");
     }
     
+    // Método para validar la expresión infija
+    public static boolean validarExpresion(String expresion) {
+        // Verificar paréntesis balanceados
+        Pila pilaParentesis = new Pila(expresion.length());
+        for (int i = 0; i < expresion.length(); i++) {
+            char ch = expresion.charAt(i);
+            if (ch == '(') {
+                pilaParentesis.push(ch);
+            } else if (ch == ')') {
+                if (pilaParentesis.isEmpty() || pilaParentesis.pop() != '(') {
+                    return false; // Paréntesis no balanceados
+                }
+            }
+        }
+        if (!pilaParentesis.isEmpty()) {
+            return false; // Paréntesis no balanceados
+        }
+
+        // Verificar operadores correctamente colocados
+        for (int i = 0; i < expresion.length(); i++) {
+            char ch = expresion.charAt(i);
+            if (isOperador(ch)) {
+                // No puede haber un operador al inicio o al final
+                if (i == 0 || i == expresion.length() - 1) {
+                    return false;
+                }
+                // No puede haber dos operadores seguidos
+                char siguiente = expresion.charAt(i + 1);
+                if (isOperador(siguiente) || siguiente == ')') {
+                    return false;
+                }
+            }
+        }
+
+        return true; // La expresión es válida
+    }
+    
     // Método para verificar si un carácter es un operador
     public static boolean isOperador(char ch) {
         return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
