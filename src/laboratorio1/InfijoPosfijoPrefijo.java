@@ -4,6 +4,11 @@ package laboratorio1;
 
 public class InfijoPosfijoPrefijo {
     
+    // Método para eliminar espacios de la expresión
+    public static String eliminarEspacios(String expresion) {
+        return expresion.replaceAll("\\s+", "");
+    }
+    
     // Método para verificar si un carácter es un operador
     public static boolean isOperador(char ch) {
         return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^';
